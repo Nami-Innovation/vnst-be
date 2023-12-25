@@ -1,0 +1,35 @@
+# image: node:10.15.0
+image: ubuntu:16.04
+
+pipelines:
+  branches:
+    staging:
+      - step:
+          name: "Deploy via ssh"
+          script:
+            - echo "Deploying to server..."
+            - pipe: atlassian/ssh-run:0.2.5
+              variables:
+                SSH_USER: $ssh_username
+                SERVER: $ssh_server
+                PORT: $ssh_port
+                MODE: 'command'
+                #https://superuser.com/a/1468101
+                #https://stackoverflow.com/a/33534097
+                COMMAND: 'source /root/.nvm/nvm.sh; cd /data/be-insurance; ./deploy/deploy.sh'
+            - echo "Deployed success"
+
+# pipelines:
+#   branches:
+#     ci-cd:
+#       - step:
+#           caches:
+#             - node
+#           script: # Modify the commands below to build your repository.
+#             - apt-get update && apt-get install -y rsync
+#             - ssh-keyscan -H 167.99.74.49 >> ~/.ssh/authorized_keys
+#             # - cd $
+#             # - rsync -r -v -e ssh . $root@167.99.74.49:/data/be-insurance --delete-before --exclude '.git'
+#             - ssh root@167.99.74.49 -p 22 'cd /data/be-insurance && ./deploy/work.sh'
+
+            # - ssh $root@167.99.74.49 'cd /data/be-insurance && yarn --production'

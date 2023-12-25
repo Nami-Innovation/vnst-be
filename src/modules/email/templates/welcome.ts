@@ -1,0 +1,268 @@
+export const TemplateWelcome = (name: string) => {
+  return `<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Nami Corporation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            font-family: "Barlow", sans-serif;
+            line-height: 1.65
+        }
+
+        img {
+            margin: 0 auto;
+            display: block
+        }
+
+        .header_img {
+            max-width: 100%
+        }
+
+        body, .body-wrap {
+            width: 100% !important;
+            height: 100%;
+            background: #f8f8f8;
+            color: black !important
+        }
+
+        a {
+            color: #00C8BC
+        }
+
+        .button{
+            cursor: pointer;
+            color: #00C8BC;
+            font-weight: 600;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p, ul, ol, a {
+            font-size: 0.875rem;
+            line-height: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 0.5rem;
+        }
+
+        li{
+            font-size: 0.875rem;
+            font-weight: normal;
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 20px;
+            text-align: left;
+            color: #223050
+        }
+
+        .primarycolor {
+            color: #00C8BC !important
+        }
+
+        .code {
+            color: #00C8BC !important;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .container {
+            border: 1px solid #8080801f !important;
+            border-radius: 8px !important;
+            display: block !important;
+            clear: both !important;
+            margin: 0 auto !important;
+            max-width: 640px !important
+        }
+
+        .container table {
+            width: 100% !important;
+            border-collapse: collapse
+        }
+
+        .container .masthead {
+            background: #71bc37;
+            color: black;
+            position: relative
+        }
+
+        .container .footer {
+            background: #007088
+        }
+
+        .container .content {
+            padding: 3.125rem 4.125rem;
+            text-align: center
+        }
+
+        .container .content.footer p {
+            margin-bottom: 0;
+            color: #fff;
+            text-align: center;
+            font-size: 14px
+        }
+
+        .copyright {
+            padding: 30px;
+            color: #fff;
+            text-align: center
+        }
+
+        .copyright p {
+            margin: 0
+        }
+
+        footer {
+            background: black;
+            padding: 36px
+        }
+
+        .footer-wrapper {
+            display: flex;
+            justify-content: space-between
+        }
+
+        .icons {
+            width: 40%
+        }
+
+        .icon {
+            width: 100%
+        }
+
+        .flex > div {
+            float: left
+        }
+
+        .links {
+            margin-top: 24px;
+            text-align: center
+        }
+
+        .links > a {
+            font-size: 14px
+        }
+
+        div.downloads {
+            display: flex;
+            justify-content: flex-end;
+            width: 80&%
+        }
+
+        .downloads > a {
+            float: left;
+            margin-left: 15px
+        }
+
+        .icons > a {
+            float: left;
+            margin-right: 20px;
+            width: 15%
+        }
+
+        .links.primarycolor > a {
+            margin: 0 11px
+        }
+
+    </style>
+</head>
+<body>
+<table class="body-wrap" cellpadding="0" cellspacing="0">
+    <tr>
+        <td class="container">
+          <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center" class="masthead">
+                  <div class="pos-relative">
+                        <span>
+                            <img class="header_img"
+                                 src="https://static.namifutures.com/nami.exchange/images/email/nami-header.jpg"
+                                 alt="nami-header" border="0">
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="content">
+                    <div>
+                        <h1>
+                            Confirm Your Registration
+                        </h1>
+    
+                        <div style="text-align: left">
+                            <p>
+                                Welcome to ${name}!<br>
+                                Click the button below to complete verification:
+                            </p>
+                            <p>
+                                <a href="{{ verifyUrl }}" class="button">
+                                    Confirm
+                                </a>
+                            </p>
+                            <p>
+                                Security Note: <br>
+                                * DO NOT give your password to anyone!<br>
+                                * Enable Google 2FA!<br><br>
+                                If this activity is not your own operation, please contact us immediately.<br>
+                                - Telegram: <a href="https://t.me/namitradevn">https://t.me/namitradevn</a><br>
+                                - English Telegram: <a href="https://t.me/namitrade">https://t.me/namitrade</a><br><br>
+                                Automated message. Please do not reply!
+                            </p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <footer>
+        <div class="footer-wrapper">
+            <div class="icons">
+                <a href="https://www.facebook.com/nami.trade.official"><img
+                        src="https://static.namifutures.com/nami.exchange/images/email/google-play.png"
+                        height="40"
+                        alt="facebook-icon" border="0" class="icon"></a>
+                <a href="https://twitter.com/NamiTrade"><img
+                        src="https://static.namifutures.com/nami.exchange/images/email/google-play.png"
+                        height="40"
+                        alt="twitter-icon" border="0" class="icon"></a>
+                <a href="https://t.me/namitrade"><img
+                        src="https://static.namifutures.com/nami.exchange/images/email/google-play.png"
+                        height="40"
+                        alt="telegram-icon" border="0" class="icon"></a>
+            </div>
+            <div class="downloads">
+                <a href="https://play.google.com/store/apps/details?id=com.namicorp.exchange"><img
+                        src="https://static.namifutures.com/nami.exchange/images/email/google-play.png"
+                        height="40"
+                        alt="download-on-google-play" border="0"></a>
+                <a href="https://apps.apple.com/app/id1480302334"><img
+                        src="https://static.namifutures.com/nami.exchange/images/email/app-store.png"
+                        height="40"
+                        alt="download-on-app-store" border="0"></a>
+            </div>
+        </div>
+        <div class="links primarycolor">
+            <a href="https://nami.io/" class="primarycolor">www.nami.io</a>
+            <a href="https://gmail.com/" class="primarycolor">support@nami.io</a>
+            <a href="https://nami.exchange/privacy" class="primarycolor">Privacy policy</a>
+        </div>
+
+    </footer>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
+`;
+};

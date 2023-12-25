@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  vnst-be:
+    image: vnst-be
+    restart: always
+    build: .
+    ports:
+      - '${PORT:-5002}:${PORT:-5002}'
+    networks:
+      - vnst-docker-stack_vnst-network
+
+networks:
+  vnst-docker-stack_vnst-network:
+    external: true

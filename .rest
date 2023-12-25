@@ -1,0 +1,8 @@
+GET http://localhost:8075/api/insurance/v1/user-info
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7IndhbGxldEFkZHJlc3MiOiIweEZBMzlhOTMwQzdBM0QxZkVkZTRFMTM0OEZGNzRjMGM1YmE5M0QyQjQifSwiaWF0IjoxNjU5MDY2NzUwfQ.qdN3DQymX6_Zuf87S5cZ4kF1P9yDe0Q2S4kBW4HqAck
+
+###
+POST http://localhost:5500/api/insurance/log-in
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7IndhbGxldEFkZHJlc3MiOiIweEZBMzlhOTMwQzdBM0QxZkVkZTRFMTM0OEZGNzRjMGM1YmE5M0QyQjQifSwiaWF0IjoxNjU5MDY2NzUwfQ.qdN3DQymX6_Zuf87S5cZ4kF1P9yDe0Q2S4kBW4HqAck
