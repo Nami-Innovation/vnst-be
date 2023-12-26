@@ -2,11 +2,13 @@ version: '3'
 
 services:
   vnst-be:
-    image: vnst-be
+    image: dockerhub.vnst.io/vnst-be-prod
     restart: always
     build: .
     ports:
       - '${PORT:-5002}:${PORT:-5002}'
+    volumes:
+      - ./.env:/usr/src/app/.env
     networks:
       - vnst-docker-stack_vnst-network
 
