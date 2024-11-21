@@ -1,10 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { CHAIN_ID } from "@utils/constant/chains";
-import { Token } from "aws-sdk";
 import { Transform, Type } from "class-transformer";
 import { IsMongoId, IsOptional, IsEnum, IsNumber, Min } from "class-validator";
 import { LIQUIDITY_SUPPORT_TYPE } from "../merchant.constants";
 import { PaginationQueryDto } from "@utils/dto/pagination-query.dto";
+import { Token } from "@utils/constant/token";
 
 export class LiquiditySupportQueryDto extends PaginationQueryDto {
   @ApiProperty({
@@ -25,7 +25,7 @@ export class LiquiditySupportQueryDto extends PaginationQueryDto {
   chainId?: CHAIN_ID;
 
   @ApiProperty({
-    enum: Object.values(Token),
+    enum: Token,
     required: false,
   })
   @IsOptional()

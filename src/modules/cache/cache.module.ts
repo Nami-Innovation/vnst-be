@@ -7,12 +7,11 @@ import { CacheModule } from "@nestjs/cache-manager";
 @Module({
   imports: [
     CacheModule.register({
-      useFactory: async () => ({
-        store: redisStore,
-        host: env.REDIS_HORT,
-        port: env.REDIS_PORT,
-        password: env.REDIS_PASSWORD,
-      }),
+      isGlobal:true,
+      store: redisStore,
+      host: env.REDIS_HOST,
+      port: env.REDIS_PORT,
+      password: env.REDIS_PASSWORD,
     }),
   ],
   providers: [CacheService],

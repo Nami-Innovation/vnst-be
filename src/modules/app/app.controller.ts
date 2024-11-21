@@ -1,9 +1,12 @@
-import { Controller, Get, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 import { WalletsService } from "@modules/wallets/wallets.service";
 import { EventLogsService } from "@modules/event-logs/event-logs.service";
 // import { TransactionLogService } from "@modules/transaction-log/transaction-log.service";
 import { CacheInterceptor, CacheKey, CacheTTL } from "@nestjs/cache-manager";
 import { ContractService } from "@modules/contract/contract.service";
+import { NetworkQueryDto } from "@utils/dto/chain-query.dto";
+import { NETWORK } from "@utils/constant/chains";
+import { TonService } from "@modules/ton/ton.service";
 
 @Controller()
 export class AppController {
@@ -12,18 +15,35 @@ export class AppController {
     private readonly eventLogsService: EventLogsService,
     // private readonly transactionLogService: TransactionLogService,
     private readonly contractService: ContractService,
+    private readonly tonService: TonService,
   ) {}
 
   @Get("/stats")
   @CacheTTL(60)
   @UseInterceptors(CacheInterceptor)
-  async getStats() {
+  async getStats(@Query() query: NetworkQueryDto) {
+    if (query.network === NETWORK.TON) {
+      const [stats, transactions, holders, operationPool] = await Promise.all([
+        this.tonService.getStats(),
+        this.tonService.countAllTransactions(),
+        this.walletsService.countHolders(query.network),
+        this.tonService.getOperationPool(),
+      ]);
+      
+      return {
+        ...stats,
+        transactions,
+        holders,
+        operationPool,
+      };
+    }
+
     const [minted, redeemed, transactions, holders, operationPool] =
       await Promise.all([
         this.eventLogsService.getAmountMinted(),
         this.eventLogsService.getAmountRedeemed(),
         this.eventLogsService.countAllTxn(),
-        this.walletsService.countHolders(),
+        this.walletsService.countHolders(query.network),
         this.contractService.getOperationPool(),
       ]);
 
@@ -45,5 +65,19 @@ export class AppController {
   @Get("/ping")
   ping() {
     return "pong";
+  }
+
+  @Get("/totalcoins")
+  async getTotalSupply() {
+    const totalSupply = this.contractService.getTotalSupply();
+
+    return totalSupply;
+  }
+
+  @Get("/circulating")
+  async getCirculating() {
+    const circulating = this.contractService.getTotalSupply();
+
+    return circulating;
   }
 }

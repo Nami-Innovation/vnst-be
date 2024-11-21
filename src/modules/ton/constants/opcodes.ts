@@ -1,0 +1,11 @@
+export const JETTON_OPCODES = {
+  JETTON_NOTIFY: 0x7362d09c,
+  JETTON_TRANSFER_INTERNAL: 0x178d4519,
+  JETTON_BURN: 0x595f07bc,
+  JETTON_TRANSFER: 0xf8a7ea5,
+};
+
+export const VNST_OPCODES = {
+  MINT: 0xa3b1f2c4,
+  REDEEM: 0x5f9e8d7a,
+};

@@ -7,6 +7,7 @@ import { JwtStrategy } from "./jwt.strategy";
 import { LocalStrategy } from "./local.strategy";
 import { WalletsModule } from "@modules/wallets/wallets.module";
 import { AuthController } from "./auth.controller";
+import { TonModule } from "@modules/ton/ton.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AuthController } from "./auth.controller";
         expiresIn: 1000 * 60 * 60 * 6, // 6 hour,
       },
     }),
+    TonModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtService, JwtStrategy, LocalStrategy],

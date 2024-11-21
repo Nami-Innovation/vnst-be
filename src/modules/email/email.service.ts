@@ -5,10 +5,10 @@ import { LoggerService } from "@modules/logger/logger.service";
 import { TemplateWelcome } from "./templates/welcome";
 import { ConfigService } from "@nestjs/config";
 import { OtpTemplate } from "./templates/otp-email";
-import { EventName } from "@modules/event-logs/event-logs.constant";
 import { MintTemplate } from "./templates/mint-email";
 import { RedeemTemplate } from "./templates/redeem-email";
 import { SendEmailTemplate } from "./templates";
+import { NotificationType } from "src/schema/notification.schema";
 
 @Injectable()
 export class EmailService {
@@ -56,13 +56,13 @@ export class EmailService {
     }
   }
 
-  async sendEmailTransaction(message: any, event: string): Promise<void> {
-    const { recipient, subject, walletAddress, transactionHash } = message;
+  async sendEmailTransaction(message: any, event: NotificationType): Promise<void> {
+    const { recipient, subject, walletAddress, transactionHash, network } = message;
     let data;
     let bodyTemplate;
     switch (event) {
-      case EventName.MINT:
-        bodyTemplate = MintTemplate(walletAddress, transactionHash);
+      case NotificationType.MINT:
+        bodyTemplate = MintTemplate(walletAddress, transactionHash, network);
         data = {
           from: this.config.get("EMAIL_FROM"),
           to: recipient,
@@ -70,8 +70,8 @@ export class EmailService {
           html: SendEmailTemplate(bodyTemplate),
         };
         break;
-      case EventName.REDEEM:
-        bodyTemplate = RedeemTemplate(walletAddress, transactionHash);
+      case NotificationType.REDEEM:
+        bodyTemplate = RedeemTemplate(walletAddress, transactionHash, network);
         data = {
           from: this.config.get("EMAIL_FROM"),
           to: recipient,

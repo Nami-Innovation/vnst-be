@@ -58,7 +58,7 @@ export class TokenPriceService {
           year: { $year: "$time" },
           month: { $month: "$time" },
           day: { $dayOfMonth: "$time" },
-          timezone
+          timezone,
         };
         break;
       case TimeRange.Month:
@@ -67,7 +67,7 @@ export class TokenPriceService {
           year: { $year: "$time" },
           month: { $month: "$time" },
           day: { $dayOfMonth: "$time" },
-          timezone
+          timezone,
         };
         break;
       case TimeRange.Year:
@@ -75,7 +75,7 @@ export class TokenPriceService {
         groupTime = {
           year: { $year: "$time" },
           month: { $month: "$time" },
-          timezone
+          timezone,
         };
         break;
       default:
@@ -89,6 +89,7 @@ export class TokenPriceService {
             $gte: startDate,
           },
           token: query.token,
+          network: query.network,
         },
       },
       {
@@ -116,5 +117,13 @@ export class TokenPriceService {
       },
     ]);
     return results.map(({ _id, ...rest }) => rest);
+  }
+
+  getLatestPrice(network: string) {
+    return this.tokenPriceModel
+      .findOne({
+        network,
+      })
+      .sort({ time: -1 });
   }
 }

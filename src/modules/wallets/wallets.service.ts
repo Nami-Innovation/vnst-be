@@ -10,6 +10,9 @@ import { Queue } from "bull";
 import { EmailService } from "@modules/email/email.service";
 import dayjs from "src/utils/dayjs";
 import { formatTimestamp } from "@utils/helpers";
+import { ContractService } from "@modules/contract/contract.service";
+import { CacheService } from "@modules/cache/cache.service";
+import { NETWORK } from "@utils/constant/chains";
 
 @Injectable()
 export class WalletsService {
@@ -18,6 +21,8 @@ export class WalletsService {
     private readonly walletModel: Model<WalletDocument>,
     @InjectQueue("eventLog") private readonly eventLogQueue: Queue,
     private readonly emailService: EmailService,
+    private readonly contractService: ContractService,
+    private readonly cacheService: CacheService,
   ) {}
 
   create(createWalletDto: CreateWalletDto) {
@@ -26,12 +31,13 @@ export class WalletsService {
       email: createWalletDto.email,
       enabledNoti: createWalletDto.enabledNoti,
       balance: createWalletDto.balance,
-      nonce: uuidv4(),
+      nonce: createWalletDto.nonce,
+      network: createWalletDto.network,
     });
   }
 
-  async countHolders() {
-    return this.walletModel.count({ balance: { $gt: 0 } });
+  async countHolders(network: NETWORK) {
+    return this.walletModel.count({ balance: { $gt: 0 }, network });
   }
 
   findOne(id: string) {
@@ -44,6 +50,30 @@ export class WalletsService {
 
   findByWalletAddress(walletAddress: string) {
     return this.walletModel.findOne({ walletAddress });
+  }
+
+  async getWalletDetail(walletAddress: string, network: NETWORK) {
+    const cacheKey = `vnst-cms:${walletAddress}`;
+    let isVerified = await this.cacheService.get(cacheKey);
+    // TODO: Check if wallet is verified on TON
+    if (isVerified === null && network === NETWORK.BNB) {
+      try {
+        isVerified = await this.contractService.isVerified(walletAddress);
+        this.cacheService.set(cacheKey, isVerified, 300);
+      } catch (error) {
+        isVerified = false;
+      }
+    }
+
+    const data = await this.walletModel.findOne({ walletAddress, network });
+    if (!data) {
+      return null;
+    }
+
+    return {
+      ...data.toObject(),
+      isVerified: isVerified || false,
+    };
   }
 
   async update(walletAddress: string, updateWalletDto: UpdateWalletDto) {
@@ -63,6 +93,7 @@ export class WalletsService {
       {
         $set: {
           nonce,
+          network: NETWORK.BNB,
         },
       },
       { upsert: true },

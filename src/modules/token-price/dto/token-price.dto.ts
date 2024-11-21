@@ -2,8 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsOptional } from "class-validator";
 import { TimeRange } from "../token-price.constants";
 import { Token } from "@utils/constant/token";
+import { NetworkQueryDto } from "@utils/dto/chain-query.dto";
 
-export class TokenPriceChartDto {
+export class TokenPriceChartDto extends NetworkQueryDto {
   @ApiProperty({
     enum: Object.values(TimeRange),
     required: false,

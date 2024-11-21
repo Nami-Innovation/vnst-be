@@ -14,6 +14,7 @@ import { NotificationType } from "src/schema/notification.schema";
 import { EventName } from "./event-logs.constant";
 import { EmailService } from "@modules/email/email.service";
 import { formatTimestamp } from "@utils/helpers";
+import { NETWORK } from "@utils/constant/chains";
 
 @Processor("eventLog")
 export class EventLogsConsumer {
@@ -47,6 +48,7 @@ export class EventLogsConsumer {
         await this.walletsService.create({
           walletAddress: address,
           balance,
+          network: NETWORK.BNB,
         });
       }
     } catch (error) {
@@ -114,8 +116,9 @@ export class EventLogsConsumer {
                       )}`,
                       walletAddress: wallet.walletAddress,
                       transactionHash,
+                      network: NETWORK.BNB,
                     },
-                    EventName.MINT,
+                    NotificationType.MINT,
                   );
                 }
                 break;
@@ -141,8 +144,9 @@ export class EventLogsConsumer {
                       )}`,
                       walletAddress: wallet.walletAddress,
                       transactionHash,
+                      network: NETWORK.BNB,
                     },
-                    EventName.REDEEM,
+                    NotificationType.REDEEM,
                   );
                 }
                 break;

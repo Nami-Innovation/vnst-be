@@ -1,9 +1,11 @@
+import { NETWORK } from "@utils/constant/chains";
 import env from "@utils/constant/env";
 import { convertWalletToShortString } from "@utils/helpers";
 
 export const RedeemTemplate = (
   walletAddress: string,
   transactionHash: string,
+  network: string = NETWORK.BNB,
 ) => {
   return `        <div
   style="
@@ -72,7 +74,9 @@ export const RedeemTemplate = (
     line-height: 35px;
     word-break: break-all;
     "
-    href="${env.BSC_TX_LINK}/${transactionHash}"
+    href="${
+      network === NETWORK.TON ? env.TON_TX_LINK : env.BSC_TX_LINK
+    }/${transactionHash}"
   >
     ${transactionHash}
   </a>

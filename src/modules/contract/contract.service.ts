@@ -70,4 +70,18 @@ export class ContractService {
       .call();
     return Number(Web3.utils.fromWei(balance, "ether"));
   }
+
+  async getTotalSupply() {
+    const total: bigint = await this.vnstContract.methods.totalSupply().call();
+
+    return Number(Web3.utils.fromWei(total, "ether"));
+  }
+
+  async isVerified(address: string) {
+    const isVerified = await this.vnstContract.methods
+      // @ts-ignore
+      .isVerified(address)
+      .call();
+    return isVerified;
+  }
 }

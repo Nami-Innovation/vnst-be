@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { NETWORK } from "@utils/constant/chains";
 import { Document } from "mongoose";
 
 export type WalletDocument = Wallet & Document;
@@ -23,7 +24,6 @@ export class Wallet {
   @Prop({
     required: true,
     type: String,
-    unique: true,
     index: true,
   })
   walletAddress: string;
@@ -67,6 +67,22 @@ export class Wallet {
     type: String,
   })
   tmpEmail?: string;
+
+  @Prop({
+    required: false,
+    enum: NETWORK,
+    default: NETWORK.BNB,
+  })
+  network: NETWORK;
+
+  @Prop({
+    required: false,
+    type: Boolean,
+    default: false,
+  })
+  isVerified: boolean;
 }
 
 export const WalletSchema = SchemaFactory.createForClass(Wallet);
+
+WalletSchema.index({ walletAddress: 1, network: 1 }, { unique: true });

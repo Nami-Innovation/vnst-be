@@ -1,3 +1,4 @@
+import { Address } from "@ton/core";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -22,6 +23,10 @@ define("EMAIL_FROM", process.env.EMAIL_FROM);
 define("API_KEY_BSC", process.env.API_KEY_BSC);
 define("ADDRESS_SMART_CONTRACT", process.env.ADDRESS_SMART_CONTRACT);
 define("BSC_TX_LINK", process.env.BSC_TX_LINK);
+define("TON_TX_LINK", process.env.TON_TX_LINK);
+define("IS_MAINNET", process.env.IS_MAINNET === "true");
+// TON CONFIG
+define("TON_SMC_ADDRESS", Address.parse(process.env.TON_SMC_ADDRESS));
 
 function define(key: string, value: any) {
   Object.defineProperty(env, key, {

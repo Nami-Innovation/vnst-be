@@ -16,6 +16,7 @@ import {
   VerifyEmailDto,
 } from "./dto/update-wallet.dto";
 import { ApiTags } from "@nestjs/swagger";
+import { NETWORK } from "@utils/constant/chains";
 
 @ApiTags("Wallets")
 @Controller("wallets")
@@ -25,7 +26,10 @@ export class WalletsController {
 
   @Get("/me")
   async getProfile(@Req() req) {
-    return this.walletsService.findByWalletAddress(req.user.walletAddress);
+    return this.walletsService.getWalletDetail(
+      req.user.walletAddress,
+      req.user.network,
+    );
   }
 
   @Put("/update-me")

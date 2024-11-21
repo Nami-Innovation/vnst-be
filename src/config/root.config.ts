@@ -18,6 +18,7 @@ import { NotificationModule } from "@modules/notification/notification.module";
 import { MerchantSubscriberModule } from "@modules/merchant-subscriber/merchant-subscriber.module";
 import { CacheModule } from "@nestjs/cache-manager";
 import { TokenPriceModule } from "@modules/token-price/token-price.module";
+import { TonModule } from "@modules/ton/ton.module";
 
 export const RootModule = [
   ConfigModule.forRoot({
@@ -46,10 +47,11 @@ export const RootModule = [
     host: env.REDIS_HOST,
     port: env.REDIS_PORT,
     password: env.REDIS_PASSWORD || undefined,
-    prefix: 'vnst_be:',
+    prefix: "vnst_be:",
     ttl: 60 * 10,
     isGlobal: true,
   }),
+  TonModule,
   AuthModule,
   MerchantModule,
   TransactionLogModule,
@@ -60,5 +62,5 @@ export const RootModule = [
   MerchantSubscriberModule,
   ContractModule,
   EmailModule,
-  TokenPriceModule
+  TokenPriceModule,
 ];

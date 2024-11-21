@@ -5,6 +5,7 @@ import { TokenPrice, TokenPriceSchema } from "src/schema/token-price.schema";
 import { TokenPriceController } from "./token-price.controller";
 import { ContractModule } from "@modules/contract/contract.module";
 import { TokenPriceSchedule } from "./token-price.schedule";
+import { TonModule } from "@modules/ton/ton.module";
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { TokenPriceSchedule } from "./token-price.schedule";
       { name: TokenPrice.name, schema: TokenPriceSchema },
     ]),
     ContractModule,
+    TonModule,
   ],
   controllers: [TokenPriceController],
   providers: [TokenPriceService, TokenPriceSchedule],

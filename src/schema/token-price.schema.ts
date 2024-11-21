@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { NETWORK } from "@utils/constant/chains";
 import { Document } from "mongoose";
 
 export type TokenPriceDocument = TokenPrice & Document;
@@ -31,6 +32,13 @@ export class TokenPrice {
     index: true,
   })
   time: Date;
+
+  @Prop({
+    required: false,
+    enum: NETWORK,
+    default: NETWORK.BNB,
+  })
+  network: NETWORK;
 }
 
 export const TokenPriceSchema = SchemaFactory.createForClass(TokenPrice);

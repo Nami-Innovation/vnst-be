@@ -16,8 +16,8 @@ async function bootstrap() {
 
   if (!env.isProduction) {
     const document = SwaggerModule.createDocument(app, configSwagger);
-    SwaggerModule.setup("api", app, document);
-    mongoose.set("debug", true);
+    SwaggerModule.setup("api/docs", app, document);
+    // mongoose.set("debug", true);
   }
 
   app.enableShutdownHooks();
